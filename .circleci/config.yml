@@ -108,18 +108,17 @@ jobs:
     environment:
       IMAGE: openquantumsafe/ci-ubuntu-bionic-x86_64:latest
       CC: clang-9
-      CONFIGURE_ARGS: -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZER=Address
+      CONFIGURE_ARGS: -DCMAKE_BUILD_TYPE=Sanitizer -DSANITIZER_TYPE=Address
   ubuntu-bionic-x86_64-ubsan:
     <<: *oqsjob
     environment:
       IMAGE: openquantumsafe/ci-ubuntu-bionic-x86_64:latest
       CC: clang-9
-      CONFIGURE_ARGS: -DCMAKE_BUILD_TYPE=Debug -DUSE_SANITIZER=Undefined
+      CONFIGURE_ARGS: -DCMAKE_BUILD_TYPE=Sanitizer -DSANITIZER_TYPE=Undefined
   macOS:
     macos:
         xcode: "11.3.0"
     environment:
-        #TODO: Make tests pass with Release build
         CONFIGURE_ARGS: -DOQS_USE_OPENSSL=OFF
         SKIP_TESTS: style
     steps:

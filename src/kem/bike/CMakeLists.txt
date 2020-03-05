@@ -1,10 +1,3 @@
-# GCC 4.9 erroneously reports warnings for certain valid code in BIKE
-# https://stackoverflow.com/questions/13746033/how-to-repair-warning-missing-braces-around-initializer
-# We will disable warnings for these
-if(CMAKE_C_COMPILER_ID STREQUAL "GNU" AND CMAKE_C_COMPILER_VERSION VERSION_LESS "5")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-braces -Wno-missing-field-initializers")
-endif()
-
 set(SRCS additional/decode.c
          additional/gf2x_portable.c
          additional/sampling.c
@@ -13,8 +6,6 @@ set(SRCS additional/decode.c
          additional/aes_ctr_prf.c
          additional/error.c
          additional/gf2x_mul.c)
-
-add_compile_options(-include ${CMAKE_CURRENT_LIST_DIR}/functions_renaming.h)
 
 if(CMAKE_HOST_SYSTEM_NAME STREQUAL "Darwin")
     set(SRCS ${SRCS} additional/sampling_portable.c
@@ -50,12 +41,14 @@ set(_BIKE_OBJS $<TARGET_OBJECTS:kem_bike>)
 if(OQS_ENABLE_KEM_bike1_l1_cpa)
     add_library(bike1_l1_cpa OBJECT additional/kem_cpa.c ${SRCS})
     target_compile_definitions(bike1_l1_cpa PRIVATE INDCPA=1 LEVEL=1 FUNC_PREFIX=OQS_KEM_bike1_l1_cpa ${CPP_DEFS})
+    target_compile_options(bike1_l1_cpa PRIVATE -include ${CMAKE_CURRENT_LIST_DIR}/functions_renaming.h)
     set(_BIKE_OBJS ${_BIKE_OBJS} $<TARGET_OBJECTS:bike1_l1_cpa>)
 endif()
 
 if(OQS_ENABLE_KEM_bike1_l3_cpa)
     add_library(bike1_l3_cpa OBJECT ${SRCS} additional/kem_cpa.c)
     target_compile_definitions(bike1_l3_cpa PRIVATE INDCPA=1 LEVEL=3 FUNC_PREFIX=OQS_KEM_bike1_l3_cpa ${CPP_DEFS})
+    target_compile_options(bike1_l3_cpa PRIVATE -include ${CMAKE_CURRENT_LIST_DIR}/functions_renaming.h)
     set(_BIKE_OBJS ${_BIKE_OBJS} $<TARGET_OBJECTS:bike1_l3_cpa>)
 endif()
 
@@ -63,12 +56,14 @@ endif()
 if(OQS_ENABLE_KEM_bike1_l1_fo)
     add_library(bike1_l1_fo OBJECT ${SRCS} additional/kem.c)
     target_compile_definitions(bike1_l1_fo PRIVATE LEVEL=1 FUNC_PREFIX=OQS_KEM_bike1_l1_fo ${CPP_DEFS})
+    target_compile_options(bike1_l1_fo PRIVATE -include ${CMAKE_CURRENT_LIST_DIR}/functions_renaming.h)
     set(_BIKE_OBJS ${_BIKE_OBJS} $<TARGET_OBJECTS:bike1_l1_fo>)
 endif()
 
 if(OQS_ENABLE_KEM_bike1_l3_fo)
     add_library(bike1_l3_fo OBJECT ${SRCS} additional/kem.c)
     target_compile_definitions(bike1_l3_fo PRIVATE LEVEL=3 FUNC_PREFIX=OQS_KEM_bike1_l3_fo ${CPP_DEFS})
+    target_compile_options(bike1_l3_fo PRIVATE -include ${CMAKE_CURRENT_LIST_DIR}/functions_renaming.h)
     set(_BIKE_OBJS ${_BIKE_OBJS} $<TARGET_OBJECTS:bike1_l3_fo>)
 endif()
 
