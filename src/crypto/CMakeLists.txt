@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 # The *_IMPL variables are absolute paths
 # as they are needed in the tests/ sub-directory.
 if(OQS_USE_AES_OPENSSL)

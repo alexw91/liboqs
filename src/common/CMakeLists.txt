@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 set(SRCS common.c
          rand.c
          rand_nist.c)

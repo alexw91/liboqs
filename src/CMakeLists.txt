@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: MIT
+
 add_subdirectory(common)
 add_subdirectory(crypto)
 
