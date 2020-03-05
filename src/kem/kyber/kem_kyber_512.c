@@ -33,13 +33,25 @@ int PQCLEAN_KYBER512_CLEAN_crypto_kem_enc(unsigned char *ct, unsigned char *ss, 
 int PQCLEAN_KYBER512_CLEAN_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk);
 
 OQS_API OQS_STATUS OQS_KEM_kyber_512_keypair(uint8_t *public_key, uint8_t *secret_key) {
+#if defined(OQS_USE_AVX2_INSTRUCTIONS) && defined(OQS_USE_BMI2_INSTRUCTIONS)
+	return (OQS_STATUS) PQCLEAN_KYBER512_AVX2_crypto_kem_keypair(public_key, secret_key);
+#else
 	return (OQS_STATUS) PQCLEAN_KYBER512_CLEAN_crypto_kem_keypair(public_key, secret_key);
+#endif
 }
 OQS_API OQS_STATUS OQS_KEM_kyber_512_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key) {
+#if defined(OQS_USE_AVX2_INSTRUCTIONS) && defined(OQS_USE_BMI2_INSTRUCTIONS)
+	return (OQS_STATUS) PQCLEAN_KYBER512_AVX2_crypto_kem_enc(ciphertext, shared_secret, public_key);
+#else
 	return (OQS_STATUS) PQCLEAN_KYBER512_CLEAN_crypto_kem_enc(ciphertext, shared_secret, public_key);
+#endif
 }
 OQS_API OQS_STATUS OQS_KEM_kyber_512_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key) {
+#if defined(OQS_USE_AVX2_INSTRUCTIONS) && defined(OQS_USE_BMI2_INSTRUCTIONS)
+	return (OQS_STATUS) PQCLEAN_KYBER512_AVX2_crypto_kem_dec(shared_secret, ciphertext, secret_key);
+#else
 	return (OQS_STATUS) PQCLEAN_KYBER512_CLEAN_crypto_kem_dec(shared_secret, ciphertext, secret_key);
+#endif
 }
 
 #endif

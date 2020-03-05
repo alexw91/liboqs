@@ -2,6 +2,8 @@
 # scripts/copy_from_pqclean/copy_from_pqclean.py
 if(OQS_ENABLE_KEM_kyber_512)
     set(SRCS ${SRCS} kem_kyber_512.c pqclean_kyber512_clean/cbd.c pqclean_kyber512_clean/indcpa.c pqclean_kyber512_clean/kem.c pqclean_kyber512_clean/ntt.c pqclean_kyber512_clean/poly.c pqclean_kyber512_clean/polyvec.c pqclean_kyber512_clean/reduce.c pqclean_kyber512_clean/verify.c pqclean_kyber512_clean/symmetric-fips202.c)
+    set(SRCS ${SRCS} pqclean_kyber512_avx2/basemul.S pqclean_kyber512_avx2/cbd.c pqclean_kyber512_avx2/fips202x4.c pqclean_kyber512_avx2/fq.s pqclean_kyber512_avx2/indcpa.c pqclean_kyber512_avx2/kem.c pqclean_kyber512_avx2/ntt.s pqclean_kyber512_avx2/poly.c pqclean_kyber512_avx2/polyvec.c pqclean_kyber512_avx2/rejsample.c pqclean_kyber512_avx2/shuffle.s pqclean_kyber512_avx2/verify.c pqclean_kyber512_avx2/symmetric-fips202.c)
+    set_source_files_properties(pqclean_kyber512_avx2/basemul.S PROPERTIES COMPILE_FLAGS "-mavx2 -mbmi2")
 endif()
 if(OQS_ENABLE_KEM_kyber_768)
     set(SRCS ${SRCS} kem_kyber_768.c pqclean_kyber768_clean/cbd.c pqclean_kyber768_clean/indcpa.c pqclean_kyber768_clean/kem.c pqclean_kyber768_clean/ntt.c pqclean_kyber768_clean/poly.c pqclean_kyber768_clean/polyvec.c pqclean_kyber768_clean/reduce.c pqclean_kyber768_clean/verify.c pqclean_kyber768_clean/symmetric-fips202.c)
